@@ -12,6 +12,9 @@ import resumeRoutes from "./routes/resumeRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
+import interviewRoutes from "./routes/interviewRoutes.js";
+
+app.use("/api/interview", interviewRoutes);
 
 dotenv.config();
 
@@ -24,10 +27,10 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL ||
+    origin: [
       "http://localhost:5173",
-
+      "https://ai-mock-interview-platform-coral.vercel.app",
+    ],
     credentials: true,
   })
 );
