@@ -10,11 +10,9 @@ import authRoutes from "./routes/authRoutes.js";
 import aiRoutes from "./routes/aiRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
-
-import { errorHandler } from "./middleware/errorHandler.js";
 import interviewRoutes from "./routes/interviewRoutes.js";
 
-app.use("/api/interview", interviewRoutes);
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
 
@@ -22,7 +20,10 @@ connectDB();
 
 const app = express();
 
-/* SECURITY */
+/* =========================
+   SECURITY
+========================= */
+
 app.use(helmet());
 
 app.use(
@@ -37,7 +38,10 @@ app.use(
 
 app.use(express.json({ limit: "10kb" }));
 
-/* RATE LIMIT */
+/* =========================
+   RATE LIMIT
+========================= */
+
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
@@ -45,24 +49,36 @@ const authLimiter = rateLimit({
 
 app.use("/api/auth", authLimiter);
 
-/* ROUTES */
+/* =========================
+   ROUTES
+========================= */
+
 app.use("/api/auth", authRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/resume", resumeRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/interview", interviewRoutes);
 
-/* TEST */
+/* =========================
+   TEST ROUTE
+========================= */
+
 app.get("/", (req, res) => {
   res.send("API running...");
 });
 
-/* ERROR HANDLER */
+/* =========================
+   ERROR HANDLER
+========================= */
+
 app.use(errorHandler);
+
+/* =========================
+   SERVER
+========================= */
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(
-    `Server running on port ${PORT}`
-  );
+  console.log(`Server running on port ${PORT}`);
 });
