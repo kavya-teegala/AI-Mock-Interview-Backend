@@ -20,7 +20,7 @@ connectDB();
 
 const app = express();
 
-app.use("/api/interview", interviewRoutes);
+app.set("trust proxy", 1);
 
 /* =========================
    SECURITY
