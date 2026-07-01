@@ -30,10 +30,7 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://ai-mock-interview-platform-coral.vercel.app",
-    ],
+    origin: true,
     credentials: true,
   })
 );
